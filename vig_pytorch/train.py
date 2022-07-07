@@ -32,7 +32,8 @@ import torch.nn as nn
 import torchvision.utils
 from torch.nn.parallel import DistributedDataParallel as NativeDDP
 
-from timm.data import Dataset, resolve_data_config, Mixup, FastCollateMixup, AugMixDataset #, create_loader
+from timm.data import resolve_data_config, Mixup, FastCollateMixup, AugMixDataset #, create_loader
+from timm.data.dataset import ImageDataset
 from timm.models import create_model, resume_checkpoint, convert_splitbn_model
 from timm.utils import *
 from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy, JsdCrossEntropy
@@ -483,7 +484,7 @@ def main():
     if not os.path.exists(train_dir):
         _logger.error('Training folder does not exist at: {}'.format(train_dir))
         exit(1)
-    dataset_train = Dataset(train_dir)
+    dataset_train = ImageDataset(train_dir)
 
     collate_fn = None
     mixup_fn = None
@@ -540,7 +541,7 @@ def main():
         if not os.path.isdir(eval_dir):
             _logger.error('Validation folder does not exist at: {}'.format(eval_dir))
             exit(1)
-    dataset_eval = Dataset(eval_dir)
+    dataset_eval = ImageDataset(eval_dir)
 
     loader_eval = create_loader(
         dataset_eval,
