@@ -44,6 +44,9 @@ from timm.utils import ApexScaler, NativeScaler
 from data.myloader import create_loader
 import pyramid_vig
 
+"""
+Line 9 - Line 63 are code blocks for distributed computation
+"""
 try:
     from apex import amp
     from apex.parallel import DistributedDataParallel as ApexDDP
